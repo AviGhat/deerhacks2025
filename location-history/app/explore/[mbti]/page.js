@@ -10,7 +10,7 @@ async function getLocationHistory() {
 
 export default async function Home( {params} ) {
   const {mbti} = await params;
-  console.log(mbti);
+  //console.log(mbti);
   // TODO feed mbti into chatgpt api to get list of locations
 
   const history = await getLocationHistory();
@@ -21,7 +21,7 @@ export default async function Home( {params} ) {
 
       {/* Google Maps & Street View */}
       <div className="w-full max-w-4xl">
-        <MapComponent />
+        <MapComponent mbti = {mbti}/>
       </div>
 
       {/* Location History */}
