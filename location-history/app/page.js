@@ -1,36 +1,15 @@
-import MapComponent from "./components/MapComponent.js";
+import Link from "next/link";
 
-async function getLocationHistory() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/location-history`, { cache: "no-store" });
-  if (!res.ok) {
-    throw new Error("Failed to fetch location history");
-  }
-  return res.json();
-}
-
-export default async function Home() {
-  const history = await getLocationHistory();
-
+export default function Home() {
   return (
-    <main className="p-6 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6">Random Location Street View</h1>
-
-      {/* Google Maps & Street View */}
-      <div className="w-full max-w-4xl">
-        <MapComponent />
-      </div>
-
-      {/* Location History */}
-      <div className="mt-8 w-full max-w-2xl">
-        <h2 className="text-2xl font-semibold mb-4">Location History</h2>
-        <ul className="list-disc pl-6">
-          {history.map((entry, index) => (
-            <li key={index} className="mt-2 text-lg">
-              {entry.date}: {entry.location}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
+      <h1 className="text-4xl font-bold text-center mb-6">🌍 Welcome to Street View Explorer</h1>
+      <p className="text-lg text-center mb-8">
+        Discover random places around the world using Google Street View.
+      </p>
+      <Link href="/explore" className="px-6 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
+        Start Exploring 🚀
+      </Link>
     </main>
   );
 }
