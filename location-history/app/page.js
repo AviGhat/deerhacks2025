@@ -7,7 +7,7 @@ export default function Home() {
       <p className="text-lg text-center mb-8">
         Discover random places around the world using Google Street View.
       </p>
-      <Link href="/explore" className="px-6 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
+      <Link href="/personalitytest" className="px-6 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
         Start Exploring 🚀
       </Link>
     </main>

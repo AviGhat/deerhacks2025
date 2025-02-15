@@ -1,4 +1,4 @@
-import MapComponent from "../components/MapComponent.js";
+import MapComponent from "../../components/MapComponent.js";
 
 async function getLocationHistory() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/location-history`, { cache: "no-store" });
@@ -8,7 +8,11 @@ async function getLocationHistory() {
   return res.json();
 }
 
-export default async function Home() {
+export default async function Home( {params} ) {
+  const {mbti} = await params;
+  console.log(mbti);
+  // TODO feed mbti into chatgpt api to get list of locations
+
   const history = await getLocationHistory();
 
   return (
