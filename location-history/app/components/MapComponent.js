@@ -2,6 +2,9 @@
 
 import { useState, useEffect} from "react";
 import { GoogleMap, StreetViewPanorama, LoadScript } from "@react-google-maps/api";
+import OpenAI from "openai";
+import { zodResponseFormat } from "openai/helpers/zod";
+import { z } from "zod";
  // ✅ Correct global import in Next.js
 
 const containerStyle = {
@@ -9,14 +12,14 @@ const containerStyle = {
   height: "500px",
 };
 
-export default function MapComponent( {mbti}) {
+
+export default function MapComponent() {
   const [location, setLocation] = useState(null);
   const [cityName, setCityName] = useState(""); 
   const [hasStreetView, setHasStreetView] = useState(true); 
   const [mapsLoaded, setMapsLoaded] = useState(false); 
   const [history, setHistory] = useState([]); 
   const [count, setCount] = useState(0);
-  console.log(mbti);
 
   async function fetchLocationHistory() {
     try {

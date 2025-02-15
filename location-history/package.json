@@ -12,7 +12,10 @@
     "@react-google-maps/api": "^2.20.6",
     "axios": "^1.7.9",
     "next": "15.1.7",
+    "open": "^10.1.0",
+    "openai": "^4.85.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2"
   }
 }
