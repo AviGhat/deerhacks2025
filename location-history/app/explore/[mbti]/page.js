@@ -35,7 +35,7 @@ export default async function Home( {params} ) {
   const completion = await openai.beta.chat.completions.parse({
     model: "gpt-4o-2024-08-06",
     messages: [
-      { role: "system", content: "You are a helpful tour guide. Give the user up to 10 locations that they would enjoy, along with a description of the location given their personality type. Choose locations that are not as known." },
+      { role: "system", content: "You are a helpful tour guide. Give the user 5 locations that they would enjoy, along with a 4 sentence description of the location, and how the location would fit their personality type. Choose locations that are not as known." },
       { role: "user", content: " I have the personality type of " + mbti + ". Can you give me some locations that I would enjoy?" },
     ],
     response_format: zodResponseFormat(locationslist, "location_list"),
