@@ -2,14 +2,14 @@
 
 import { useState, useEffect} from "react";
 import { GoogleMap, StreetViewPanorama, LoadScript } from "@react-google-maps/api";
-import { set } from "zod";
+import { useRouter } from "next/navigation";
 
-const containerStyle = {
-  width: "100%",
-  height: "500px",
-};
+
+ // ✅ Correct global import in Next.js
+
 
 export default function MapComponent( {locations} ) {
+  const router = useRouter();
   // useState Hooks
   // manages states for locations, current city, if the city has a streetview, if maps are loaded, locations list, and current index of tha
   // location list
@@ -86,6 +86,11 @@ export default function MapComponent( {locations} ) {
   if (!location) return <p>Loading Map...</p>;
 
   return (
+    <div>
+      <div className="banner">
+        <h1>Explore your personalized location recomendations</h1>
+        <button onClick={() => router.push("/")} className="home-button">🏠 Return to Home</button>
+      </div>
     <div className="text-center">
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
@@ -96,7 +101,7 @@ export default function MapComponent( {locations} ) {
           if (location) checkStreetView(location); 
         }}
       >
-        <GoogleMap mapContainerStyle={containerStyle} center={location} zoom={12}>
+        <GoogleMap mapContainerClassName="map-container" center={location} zoom={12}>
           {hasStreetView ? (
             <StreetViewPanorama position={location} visible={true} />
           ) : (
@@ -104,22 +109,26 @@ export default function MapComponent( {locations} ) {
           )}
         </GoogleMap>
       </LoadScript>
-
-      {/* ✅ Corrected CSS Usage */}
+      <div className="info-col">
       <div className="location-info">
         <p>📍 <strong>City:</strong> {cityName}</p>
         <p>🌍 <strong>Latitude:</strong> {location.lat}</p>
         <p>🗺️ <strong>Longitude:</strong> {location.lng}</p>
         <p>📝 <strong>Description:</strong> {desc}</p>
       </div>
+      
 
-      <button
-        onClick={nextInList}
-        className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg text-lg hover:bg-green-700 transition"
-      >
+      <button onClick={nextInList}className="next-button">
         ⏩ Next Location
       </button>
+
+   
+
+      </div>
+      {/* ✅ Corrected CSS Usage */}
+      
     </div>
+   </div>
   );
 }
 
