@@ -32,6 +32,37 @@
   background-color: #DF6D14;
 }
 
+.flight-button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.flight-button:hover {
+  background-color: #0056b3;
+}
+
+/* 🛫 Airplane Fly-Up Animation */
+.flight-button .flight-icon {
+  display: inline-block;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.flight-button:hover .flight-icon {
+  transform: translateY(-30px) scale(1.5); /* Moves airplane up and makes it slightly bigger */
+  opacity: 0; /* Fades it out */
+}
+
 .map-container {
   margin-left: 15px;
   width: 75%;
@@ -165,4 +196,21 @@ body{
   color: white;
   text-align: center;
   font-size: larger;
+}
+.wiki-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #f4a261; /* Orange */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.wiki-button:hover {
+  background-color: #e76f51; /* Darker Orange */
 }

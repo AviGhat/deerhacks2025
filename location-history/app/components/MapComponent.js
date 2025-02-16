@@ -87,7 +87,6 @@ export default function MapComponent( {locations} ) {
     <div>
       <div className="banner">
         <h1>Explore your personalized locations!</h1>
-        <button onClick={() => router.push("/")} className="home-button">🏠 Return to Home</button>
       </div>
     <div className="text-center">
       <LoadScript
@@ -112,6 +111,8 @@ export default function MapComponent( {locations} ) {
         </GoogleMap>
       </LoadScript>
       <div className="info-col">
+
+
       <div className="location-info">
         <p>📍 <strong>City:</strong> {cityName}</p>
         <p>🌍 <strong>Latitude:</strong> {location.lat}</p>
@@ -123,6 +124,24 @@ export default function MapComponent( {locations} ) {
       <button onClick={nextInList}className="next-button">
         ⏩ Next Location
       </button>
+ {/* 🛫 Flight Search Button */}
+<a 
+  href={`https://www.google.com/travel/flights?q=flights%20to%20${encodeURIComponent(cityName)}`} 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="flight-button"
+>
+  <span className="flight-icon">✈️</span> Find Flights to {cityName}
+</a>
+{/* 🌍 Wikipedia Button */}
+<a 
+  href={`https://en.wikipedia.org/wiki/${encodeURIComponent(cityName.split(",")[0].trim())}`} 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="wiki-button"
+>
+  📖 Learn More About {cityName.split(",")[0]}
+</a>
 
    
 

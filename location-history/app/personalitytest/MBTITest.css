@@ -33,6 +33,7 @@
   margin-bottom: 30px;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-cantora), sans-serif;
 }
 
 .question-section {
@@ -53,6 +54,7 @@
   color: #F8F5E9;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease;
+  font-family: var(--font-cantora), sans-serif;
 }
 
 .scale-container {
@@ -77,6 +79,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0 10px;
+  font-family: var(--font-cantora), sans-serif;
 }
 
 .scale-button-large {
@@ -96,6 +99,7 @@
   font-weight: bold;
   color: white;
   margin: 10px;
+  font-family: var(--font-cantora), sans-serif;
 }
 
 .result-section {
@@ -112,7 +116,9 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: var(--font-cantora), sans-serif;
 }
+
 
 .result-button:hover {
   background: #059669;
