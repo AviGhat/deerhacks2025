@@ -1,6 +1,6 @@
 /* Styles for the MBTI Test Page */
 
-body {
+/* body {
     background: linear-gradient(to right, #4f46e5, #9333ea);
     color: white;
     font-family: Arial, sans-serif;
@@ -9,7 +9,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-  }
+  } */
   
   .container {
     display: flex;

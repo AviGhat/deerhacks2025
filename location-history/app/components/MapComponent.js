@@ -4,10 +4,6 @@ import { useState, useEffect} from "react";
 import { GoogleMap, StreetViewPanorama, LoadScript } from "@react-google-maps/api";
 import { useRouter } from "next/navigation";
 
-
- // ✅ Correct global import in Next.js
-
-
 export default function MapComponent( {locations} ) {
   const router = useRouter();
   // useState Hooks
@@ -67,10 +63,12 @@ export default function MapComponent( {locations} ) {
   function checkStreetView(coords) {
     if (!mapsLoaded) return;
     const streetViewService = new window.google.maps.StreetViewService();
+    
     streetViewService.getPanorama({ location: coords, radius: 100 }, (data, status) => {
-      if (status === "OK") {
+      if (status === "OK" && data.location && data.location.pano) {
         console.log("✅ Street View is available!");
         setHasStreetView(true);
+        setLocation({ lat: coords.lat, lng: coords.lng, pano: data.location.pano }); // Store pano ID
       } else {
         console.log("❌ No Street View available, falling back to Map View.");
         setHasStreetView(false);
@@ -102,10 +100,14 @@ export default function MapComponent( {locations} ) {
         }}
       >
         <GoogleMap mapContainerClassName="map-container" center={location} zoom={12}>
-          {hasStreetView ? (
-            <StreetViewPanorama position={location} visible={true} />
+        {hasStreetView ? (
+          <StreetViewPanorama
+            position={location}
+            pano={location.pano} // Use pano ID
+            visible={true}
+          />
           ) : (
-            <p className="mt-4 text-red-500 font-semibold">No Street View available for this location.</p>
+          <p className="mt-4 text-red-500 font-semibold">No Street View available for this location.</p>
           )}
         </GoogleMap>
       </LoadScript>
