@@ -2,20 +2,25 @@ import MapComponent from "../../components/MapComponent.js";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
-// open ai stuff
+
+
+// initialzize openai api
 const openai = new OpenAI(
   {apiKey: `${process.env.OPENAI_API_KEY}`}
 );
 
+// zod schema for location list, will contain the location's name and description
 const places = z.object({
   name: z.string(),
   desc: z.string(),
 });
 
+// put places schema into an array
 const locationslist = z.object({
   locations: z.array(places),
 });
 
+// TODO: update to show chatgpt locations
 async function getLocationHistory() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/location-history`, { cache: "no-store" });
   if (!res.ok) {
@@ -25,20 +30,20 @@ async function getLocationHistory() {
 }
 
 export default async function Home( {params} ) {
+  // grab mbti from params, and feed into openai chat
   const {mbti} = await params;
-  //console.log(mbti);
-  // TODO feed mbti into chatgpt api to get list of locations
   const completion = await openai.beta.chat.completions.parse({
     model: "gpt-4o-2024-08-06",
     messages: [
-      { role: "system", content: "You are a helpful tour guide. Give the user locations that they would enjoy, along with a description of the location given their personality type." },
+      { role: "system", content: "You are a helpful tour guide. Give the user up to 10 locations that they would enjoy, along with a description of the location given their personality type. Choose locations that are not as known." },
       { role: "user", content: " I have the personality type of " + mbti + ". Can you give me some locations that I would enjoy?" },
     ],
     response_format: zodResponseFormat(locationslist, "location_list"),
   });
   
+  // get location list from openai api request, send into MapComponent
   const location_list = completion.choices[0].message.parsed;
-  console.log(location_list);
+  // TODO: Update to show chatgpt locations
   const history = await getLocationHistory();
 
   return (
@@ -47,7 +52,7 @@ export default async function Home( {params} ) {
 
       {/* Google Maps & Street View */}
       <div className="w-full max-w-4xl">
-        <MapComponent/>
+        <MapComponent locations = {location_list}/>
       </div>
 
       {/* Location History */}

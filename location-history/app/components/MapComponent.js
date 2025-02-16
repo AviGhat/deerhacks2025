@@ -2,46 +2,49 @@
 
 import { useState, useEffect} from "react";
 import { GoogleMap, StreetViewPanorama, LoadScript } from "@react-google-maps/api";
-import OpenAI from "openai";
-import { zodResponseFormat } from "openai/helpers/zod";
-import { z } from "zod";
- // ✅ Correct global import in Next.js
+import { set } from "zod";
 
 const containerStyle = {
   width: "100%",
   height: "500px",
 };
 
-
-export default function MapComponent() {
+export default function MapComponent( {locations} ) {
+  // useState Hooks
+  // manages states for locations, current city, if the city has a streetview, if maps are loaded, locations list, and current index of tha
+  // location list
   const [location, setLocation] = useState(null);
   const [cityName, setCityName] = useState(""); 
   const [hasStreetView, setHasStreetView] = useState(true); 
   const [mapsLoaded, setMapsLoaded] = useState(false); 
   const [history, setHistory] = useState([]); 
   const [count, setCount] = useState(0);
+  const [desc, setDesc] = useState("");
 
-  async function fetchLocationHistory() {
+  // helper functions
+  // grabs first location in list and loads it into streetview
+  async function fetchLocationHistory(location_list) {
     try {
-      const res = await fetch("/api/location-history");
-      if (!res.ok) throw new Error("Failed to fetch location history");
-
-      const data = await res.json();
+      const data = location_list
       if (data.length > 0) {
+        // setting list of locations for future use
         setHistory(data); 
-        loadLocation(data[0].location); 
+        setDesc(data[0].desc);
+        loadLocation(data[0].name); 
       }
     } catch (error) {
       console.error("Error fetching location history:", error);
     }
   }
 
+  // finding coordinates for location name, and then loading it into the map
   async function loadLocation(city) {
     console.log("Fetching coordinates for:", city);
     setCityName(city);
-
+    // fetch coordinates
     const coords = await getCoordinates(city);
     if (coords) {
+      // update location state
       setLocation(coords);
       if (mapsLoaded) {
         checkStreetView(coords);
@@ -49,13 +52,18 @@ export default function MapComponent() {
     }
   }
 
+  // increment index of location list, loads next location
   function nextInList() {
     if (history.length === 0) return;
     const newIndex = (count + 1) % history.length; 
-    setCount(newIndex); 
-    loadLocation(history[newIndex].location); 
+
+    // update index, desciption and load location
+    setCount(newIndex);
+    setDesc(history[newIndex].desc);
+    loadLocation(history[newIndex].name); 
   }
 
+  // main streetview function
   function checkStreetView(coords) {
     if (!mapsLoaded) return;
     const streetViewService = new window.google.maps.StreetViewService();
@@ -70,8 +78,9 @@ export default function MapComponent() {
     });
   }
 
+  // runs on initial render
   useEffect(() => {
-    fetchLocationHistory();
+    fetchLocationHistory(locations.locations);
   }, []);
 
   if (!location) return <p>Loading Map...</p>;
@@ -81,6 +90,7 @@ export default function MapComponent() {
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
         onLoad={() => {
+          console.log(desc);
           console.log("✅ Google Maps API Loaded!");
           setMapsLoaded(true);
           if (location) checkStreetView(location); 
@@ -100,6 +110,7 @@ export default function MapComponent() {
         <p>📍 <strong>City:</strong> {cityName}</p>
         <p>🌍 <strong>Latitude:</strong> {location.lat}</p>
         <p>🗺️ <strong>Longitude:</strong> {location.lng}</p>
+        <p>📝 <strong>Description:</strong> {desc}</p>
       </div>
 
       <button
