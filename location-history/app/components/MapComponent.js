@@ -2,10 +2,8 @@
 
 import { useState, useEffect} from "react";
 import { GoogleMap, StreetViewPanorama, LoadScript } from "@react-google-maps/api";
-import { useRouter } from "next/navigation";
 
 export default function MapComponent( {locations} ) {
-  const router = useRouter();
   // useState Hooks
   // manages states for locations, current city, if the city has a streetview, if maps are loaded, locations list, and current index of tha
   // location list
@@ -16,6 +14,9 @@ export default function MapComponent( {locations} ) {
   const [history, setHistory] = useState([]); 
   const [count, setCount] = useState(0);
   const [desc, setDesc] = useState("");
+  const [events, setEvents] = useState("");
+  const [food, setFood] = useState("");
+  const [reason, setReason] = useState("");
 
   // helper functions
   // grabs first location in list and loads it into streetview
@@ -26,6 +27,9 @@ export default function MapComponent( {locations} ) {
         // setting list of locations for future use
         setHistory(data); 
         setDesc(data[0].desc);
+        setEvents(data[0].event);
+        setFood(data[0].food);
+        setReason(data[0].reason);
         loadLocation(data[0].name); 
       }
     } catch (error) {
@@ -56,6 +60,9 @@ export default function MapComponent( {locations} ) {
     // update index, desciption and load location
     setCount(newIndex);
     setDesc(history[newIndex].desc);
+    setEvents(history[newIndex].event);
+    setFood(history[newIndex].food);
+    setReason(history[newIndex].reason);
     loadLocation(history[newIndex].name); 
   }
 
@@ -118,6 +125,9 @@ export default function MapComponent( {locations} ) {
         <p>🌍 <strong>Latitude:</strong> {location.lat}</p>
         <p>🗺️ <strong>Longitude:</strong> {location.lng}</p>
         <p>📝 <strong>Description:</strong> {desc}</p>
+        <p>🎉 <strong>Events:</strong> {events}</p>
+        <p>🍔 <strong>Food:</strong> {food}</p>
+        <p>👍 <strong>Why should you go:</strong> {reason}</p>
       </div>
       
 
@@ -126,7 +136,7 @@ export default function MapComponent( {locations} ) {
       </button>
  {/* 🛫 Flight Search Button */}
 <a 
-  href={`https://www.google.com/travel/flights?q=flights%20to%20${encodeURIComponent(cityName)}`} 
+  href={`https://www.google.com/travel/flights?q=flights%20to%20${encodeURIComponent(cityName.split(",")[cityName.split(",").length-1].trim())}`} 
   target="_blank" 
   rel="noopener noreferrer"
   className="flight-button"
