@@ -76,7 +76,6 @@ export default function MapComponent( {locations} ) {
     });
   }
 
-
   // runs on initial render
   useEffect(() => {
     fetchLocationHistory(locations.locations);
@@ -87,7 +86,7 @@ export default function MapComponent( {locations} ) {
   return (
     <div>
       <div className="banner">
-        <h1>Explore your personalized location recomendations</h1>
+        <h1>Explore your personalized locations!</h1>
         <button onClick={() => router.push("/")} className="home-button">🏠 Return to Home</button>
       </div>
     <div className="text-center">

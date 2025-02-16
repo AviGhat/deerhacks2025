@@ -1,15 +1,35 @@
 import Link from "next/link";
 
-export default function Home() {
+export default function MainPage() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
-      <h1 className="text-4xl font-bold text-center mb-6">🌍 Welcome to Street View Explorer</h1>
-      <p className="text-lg text-center mb-8">
-        Discover random places around the world using Google Street View.
-      </p>
-      <Link href="/personalitytest" className="px-6 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-        Start Exploring 🚀
-      </Link>
-    </main>
+    <div className="MainPage">
+      {/* 🎥 Background Video /}
+      <video autoPlay loop muted playsInline className="background-video">
+        <source src="/stockedit.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/ Content on top of the video */}
+      <div className="content">
+        <div className="title1">
+        <h1>PERSONALITY PLACES</h1>
+        </div>
+        <div className="description">
+        <p>Discover amazing places based on your personality!</p>
+        </div>
+        <Link href="/personalitytest">
+        <button className="explore-button">Start Personality Quiz</button>
+        </Link>
+
+      </div>
+
+      <div className="footer-bar">
+      <footer>
+        Aviraj Ghatora, Haashir Khan
+      </footer>
+      </div>
+
+    </div>
+
   );
 }
