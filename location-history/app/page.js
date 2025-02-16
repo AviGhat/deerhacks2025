@@ -11,10 +11,10 @@ export default function MainPage() {
       {/* Content on top of the video */}
       <div className="content">
         <div className="title1">
-        <h1>PERSONALITY PLACES</h1>
+        <h1>DISCOVERME</h1>
         </div>
         <div className="description">
-        <p>Discover amazing places based on your personality!</p>
+        <p>Your personality. Your journey. Your perfect destination.</p>
         </div>
         <Link href="/personalitytest">
         <button className="explore-button">Start Personality Quiz</button>
