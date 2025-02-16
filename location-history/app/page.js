@@ -3,18 +3,24 @@ import Link from "next/link";
 export default function MainPage() {
   return (
     <div className="MainPage">
-      <video autoPlay loop muted playsInline className="background-video">
-        <source src="/stockedit.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+<iframe
+  className="background-video"
+  src="https://player.vimeo.com/video/1057210802?background=1&autoplay=1&loop=1&muted=1"
+  style={{ border: "none" }}
+  allow="autoplay; fullscreen"
+  allowFullScreen
+></iframe>
+
+
+
 
       {/* Content on top of the video */}
       <div className="content">
         <div className="title1">
-        <h1>DISCOVERME</h1>
+        <h1>DISCOVER ME</h1>
         </div>
         <div className="description">
-        <p>Your personality. Your journey. Your perfect destination.</p>
+        <p>Your personality. Your journey. Your perfect destination!</p>
         </div>
         <Link href="/personalitytest">
         <button className="explore-button">Start Personality Quiz</button>

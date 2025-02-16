@@ -117,6 +117,18 @@ body{
   font-family: var(--font-cantora), sans-serif;
 }
 
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;  /* ✅ Stretches to full viewport width */
+  height: 100vh; /* ✅ Stretches to full viewport height */
+  object-fit: cover; /* ✅ Ensures video fills the entire screen without black bars */
+  z-index: -1; /* ✅ Puts video behind all content */
+  pointer-events: none; /* ✅ Prevents interaction */
+  transform: scale(1.5); /* ✅ Zooms in by 1.5x */
+  transform-origin: center; /* ✅ Ensures zoom is centered */
+}
 /* 📍 Ensure `location-info` Stays at the Top */
 .location-info {
   width: 100%;
