@@ -16,64 +16,70 @@ const questions = [
 ];
 
 export default function MBTITest() {
-  // State to track answers for each personality type
   const [answers, setAnswers] = useState({ E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 });
-  const [step, setStep] = useState(0); // Track current question index
-  const [completed, setCompleted] = useState(false); // Track if quiz is completed
+  const [step, setStep] = useState(0);
+  const [completed, setCompleted] = useState(false);
+  const [result, setResult] = useState("See your Results!");
   const router = useRouter();
 
-  // Handle user's answer selection
   const handleAnswer = (value) => {
     const key = questions[step].key;
     setAnswers((prev) => ({
       ...prev,
-      [key[0]]: prev[key[0]] + value, // Increase score for first trait
-      [key[2]]: prev[key[2]] + (10 - value) // Increase opposite trait inversely
+      [key[0]]: prev[key[0]] + value,
+      [key[2]]: prev[key[2]] + (10 - value)
     }));
 
     if (step < questions.length - 1) {
-      setStep(step + 1); // Move to next question
+      setStep(step + 1);
     } else {
-      setCompleted(true); // Mark quiz as completed
+      setCompleted(true);
     }
   };
 
-  // Calculate final MBTI personality type
   const calculateResult = () => {
     let mbti = "";
     mbti += answers["E"] >= answers["I"] ? "E" : "I";
     mbti += answers["S"] >= answers["N"] ? "S" : "N";
     mbti += answers["T"] >= answers["F"] ? "T" : "F";
     mbti += answers["J"] >= answers["P"] ? "J" : "P";
-    router.push(`/explore/${mbti}`); // Redirect to result page
+    setResult("Loading...");
+    router.push(`/explore/${mbti}`);
   };
+
 
   return (
     <div className="container">
-      <div className="quiz-box">
+      <h2 className="MBTI-Title"> MBTI Personality Test!</h2>
         {completed ? (
+          <div className="quiz-box">
           <div className="result-section">
             <button className="result-button" onClick={calculateResult}>
-              See Your Result
+              {result}
             </button>
           </div>
+          </div>
         ) : (
-          <div>
-            <h2 className="question-text">{questions[step].question}</h2>
-            <div className="options-container">
-              {["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"].map((option, index) => (
-                <button
-                  key={option}
-                  className="option-button"
-                  onClick={() => handleAnswer((index + 1) * 2)}
-                >
-                  {option}
-                </button>
-              ))}
+          <div className="quiz-box">
+
+            <div className="question-section">
+              <h2 className="question-text">{questions[step].question}</h2>
+              <div className="scale-container">
+                <div className="scale-options">
+                <span className="scale-label">Disagree</span>
+                  {["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"].map((option, index) => (
+                    <button
+                      key={option}
+                      className={`scale-button ${index === 0 || index === 4 ? "scale-button-large" : ""}`} // Add a class for the first and last buttons
+                      onClick={() => handleAnswer((index + 1) * 2)}
+                    />
+                  ))}
+                  <span className="scale-label">Agree</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
-      </div>
     </div>
   );
 }

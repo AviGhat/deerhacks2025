@@ -76,6 +76,7 @@ export default function MapComponent( {locations} ) {
     });
   }
 
+
   // runs on initial render
   useEffect(() => {
     fetchLocationHistory(locations.locations);
